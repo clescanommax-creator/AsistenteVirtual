@@ -1,0 +1,158 @@
+/* Icono de chat (visible al principio) */
+.chat-icon {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #white;/*transparent;*/
+  border: 4px solid #0080FF; /* Cambiá el color y grosor aquí */
+  border-radius: 50%;  /* Mantiene forma circular */
+  padding: 0px; /*asi el icono ocupa todo el contenedor*/ 
+  width: 150px;        /* Aumenta el ancho */
+  height: 150px;       /* Aumenta el alto */
+
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);/*none; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.chat-icon img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain; la imagen se ajuste al contenedor completo sin recortarse
+  /*object-fit: cover;/*La imagen llena el contenedor sin deformarse pero con cortes */
+  box-shadow: none;
+  transition: border-color 0.3s ease;
+  margin-top: 0px; /* Desplaza la imagen hacia abajo */
+
+}
+.chat-icon:hover {
+  border-color: #FF5733;
+}
+
+
+/* Ventana de chat (oculta al principio) */
+.chat-window {
+  background-color: #ffffff;
+  width: 350px;
+  height: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: none; /* Asegúrate de que esté oculta al inicio */
+  flex-direction: column;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* Estilos de la cabecera */
+.chat-header {
+  background-color: #082da6;/*4CAF50;*/
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;/* Permite el desplazamiento vertical si el contenido excede el tamaño */
+
+}
+/* Estilo para los enlaces */
+.chat-link {
+  color: #1e90ff;         /* Color azul para el enlace */
+  text-decoration: none;   /* Quitar subrayado */
+}
+
+.chat-link:hover {
+  text-decoration: underline;  /* Subrayado cuando el mouse pasa por encima */
+}
+
+
+.chat-message {
+  margin-bottom: 15px;
+  max-width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;
+  word-wrap: break-word;    /* Rompe las palabras largas para que no se desborden */
+
+}
+
+.chat-message.bot {
+  background-color: #d1f1ff;
+  align-self: flex-start;
+}
+
+.chat-message.user {
+  background-color: #e1f7d5;
+  align-self: flex-end;
+}
+
+.chat-input {
+  display: flex;/* Asegura que los elementos estén en línea */
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #f9f9f9;
+  align-items: center; /* Centra el contenido verticalmente */
+  /*justify-content: space-between; /* Alinea el input y el botón correctamente */
+  /*width: 100%; /* Asegura que el contenedor tenga el 100% de ancho */
+
+}
+/* Campo de texto */
+.chat-input input {
+  /*width: 80%;*/
+  flex-grow: 1; /* Hace que el input ocupe todo el espacio disponible */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px; /* Espacio entre el input y el botón */
+  font-size: 14px;
+  width: auto; /* Asegura que el campo de texto no tenga un ancho fijo */
+  /*
+  display: inline-flex; /* Cambia a inline-flex para que el contenedor ajuste su tamaño al contenido */
+  /*align-items: center; /* Centra el contenido verticalmente */
+  /*justify-content: flex-start; /* Alinea los elementos al inicio, ajustando al botón */
+  
+}
+
+.chat-input button {
+  /*width: 15%;*/
+  background-color: #082da6;/*4CAF50;*/
+  color: white;
+  border: none;
+  /*padding: 10px;*/
+  padding: 10px 15px; /* Asegura que el botón tenga un espacio más amplio */
+  min-width: 60px; /* Establece un ancho mínimo para el botón */
+  height: 40px; /* Ajusta la altura del botón para que no se distorsione */
+  border-radius: 5px;
+  cursor: pointer;
+  object-fit: cover;
+  display: inline-flex; /* Asegura que el contenido se centre */
+  align-items: center; /* Centra el texto verticalmente */
+  justify-content: center; /* Centra el texto horizontalmente */
+/*  white-space: nowrap; /* Evita que el texto se envuelva si es largo */
+  /*flex-shrink: 0; /* Evita que el botón se encoja si el texto es largo */
+  font-size: 14px; /* Tamaño de fuente para que el texto "Enviar" sea adecuado */
+}
+
+#close-btn {
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#close-btn:hover {
+  color: #f1f1f1;
+}
+
+
+/*fin asistente*/

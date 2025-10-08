@@ -1,0 +1,14 @@
+DESDE CMD:
+
+	cd C:\Usuarios\TuNombre\Escritorio\mi_sitio
+
+	python -m http.server 8000
+
+Para el nodelocal: 
+
+	node server.js
+
+EN UN NAVEGADOR: 
+
+http://localhost:8000
+
