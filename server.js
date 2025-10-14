@@ -67,6 +67,10 @@ app.post('/enviar-email', async (req, res) => {
   }
 });
 
+app.get('/ping', (req, res) => {
+  res.status(200).send('pong');
+});
+
   app.listen(port, () => {
   console.log(`✅ Backend corriendo en http://localhost:${port}`);
 });

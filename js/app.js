@@ -171,7 +171,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	 let respuesta = respuestas[clave];        // 📦 busca el contenido real
 		/*console.log(respuesta);*/
 	if (clave === "titulares") {
-	esperandoEmail = true;
+		PingRender();
+		esperandoEmail = true;
 	}
 		
 	// Limpiar la respuesta si contiene comas extra o espacios al final
@@ -276,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 function enviarEmailAGoogleSheets(email) {
-  fetch ('https://mi-backend-ciudadano-clescanommax.replit.app/enviar-email', {/*('http://localhost:3000/enviar-email', {*/
+  fetch ('https://asistentevirtual-s3d5.onrender.com/enviar-email', { /*'https://mi-backend-ciudadano-clescanommax.replit.app/enviar-email', {/*('http://localhost:3000/enviar-email', {*/
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email })
@@ -299,6 +300,18 @@ function enviarEmailAGoogleSheets(email) {
   });
 }
 
+const PingRender = async () => {
+  try {
+    const response = await fetch('https://asistentevirtual-s3d5.onrender.com/ping');
+    if (response.ok) {
+      console.log('✅ App de Render despertada correctamente');
+    } else {
+      console.log(`⚠️ Error al despertar la app. Código: ${response.status}`);
+    }
+  } catch (error) {
+    console.error('❌ Error al hacer el ping:', error.message);
+  }
+};
 
 });
 
