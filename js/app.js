@@ -41,20 +41,49 @@ document.addEventListener('DOMContentLoaded', function () {
   
 //Función para el botón "Enviar"
   sendButton.addEventListener('click', () => {
-    const userMessage = userInput.value.trim();
+	     const userMessage = userInput.value.trim();
     if (userMessage !== "") {
       agregarMensaje(userMessage, 'user');
       userInput.value = ''; // Limpiar el input
 
-      // Respuesta del asistente (simulada)
+      if (esperandoEmail) {
+        console.log("Email ingresado:", userMessage);
+        if (validarEmail(userMessage)) {
+          //agregarMensaje("¡Gracias! Te agregamos a la lista para recibir los titulares diarios.", 'bot');
+          enviarEmailAGoogleSheets(userMessage); 
+          esperandoEmail = false;
+        } else {
+			console.log("Ese correo no parece válido. Intentá de nuevo");
+          agregarMensaje("Ese correo no parece válido. Intentá de nuevo.", 'bot');
+        }
+      } else {
+		  //console.log("Normal");
+        // Respuesta normal del bot
+        setTimeout(() => {
+          const botResponse = getBotResponse(userMessage);
+          if (botResponse) {
+            agregarMensaje(botResponse, 'bot');
+          }
+        }, 1000);
+      }
+
+      reiniciarInactividad();
+  }
+});
+    /*const userMessage = userInput.value.trim();
+    if (userMessage !== "") {
+      agregarMensaje(userMessage, 'user');
+      userInput.value = ''; // Limpiar el input
+
+      // Respuesta normal del bot
       setTimeout(() => {
         const botResponse = getBotResponse(userMessage);
         agregarMensaje(botResponse, 'bot');
       }, 1000);
     }
 	reiniciarInactividad();
-  });
-  
+  });*/
+ /*Funcion para el boton "enter" del teclado*/
  userInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     const userMessage = userInput.value.trim();
@@ -70,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
           esperandoEmail = false;
         } else {
 			console.log("Ese correo no parece válido. Intentá de nuevo");
-          //agregarMensaje("Ese correo no parece válido. Intentá de nuevo.", 'bot');
+          agregarMensaje("Ese correo no parece válido. Intentá de nuevo.", 'bot');
         }
       } else {
 		  //console.log("Normal");
@@ -87,46 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 });
-/*/Funcion para el boton "enter" del teclado
-  userInput.addEventListener('keydown', (e) => {
-	  if (e.key === 'Enter') {
-		const userMessage = userInput.value.trim();
-		if (userMessage !== "") {
-		  agregarMensaje(userMessage, 'user');
-		  userInput.value = ''; // Limpiar el input
-	    if (esperandoEmail) {
-		  console.log("Email ingresado:", userMessage);
-		  if (validarEmail(userMessage)) {
-			agregarMensaje("¡Gracias! Te agregamos a la lista para recibir los titulares diarios.", 'bot');
-			enviarEmailAGoogleSheets(userMessage);
-			esperandoEmail = false;
-		  } else {
-			agregarMensaje("Ese correo no parece válido. Intentá de nuevo.", 'bot');
-		  }
-		} else {
-		  // Respuesta normal del bot
-		  setTimeout(() => {
-			const botResponse = getBotResponse(userMessage);
-			if (botResponse) {
-			  agregarMensaje(botResponse, 'bot');
-			}
-		  }, 1000);
-		}
-		
-
-    reiniciarInactividad();
-  }
-});*/
-
-		  /*// Respuesta del asistente (simulada)
-		  setTimeout(() => {
-			const botResponse = getBotResponse(userMessage);
-			agregarMensaje(botResponse, 'bot');
-		  }, 1000);
-		}
-		reiniciarInactividad();
-  }
-  });*/
 
 // Función para mostrar los mensajes en el chat
   function agregarMensaje(message, sender) {
@@ -299,6 +288,7 @@ function enviarEmailAGoogleSheets(email) {
   .catch(error => {
     console.error("Error al enviar al backend:", error);
     agregarMensaje("❌ No se pudo guardar el email. Intentalo más tarde.", 'bot');
+	console.log("Entro aca enviaremail()");
   });
 }
 
