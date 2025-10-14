@@ -5,10 +5,15 @@ DESDE CMD:
 	python -m http.server 8000
 
 Para el nodelocal: 
-
 	node server.js
-
+Backend virtual: 
+	Render
 EN UN NAVEGADOR: 
+	http://localhost:8000
 
-http://localhost:8000
+PARA GIT: 
 
+	Traer cambios del remoto	git pull origin main
+	Preparar archivos para commit	git add .
+	Guardar cambios localmente	git commit -m "mensaje"
+	Subir cambios al remoto		git push origin main

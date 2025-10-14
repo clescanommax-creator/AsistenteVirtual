@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		chatIcon.style.display = 'none';    // Ocultar el icono de chat
 		userInput.focus();
 		reiniciarInactividad();
+    PingRender();
   });
 
  //clic en el botón de cerrar, ocultamos la ventana del chat y mostramos el icono.
@@ -145,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
     messageDiv.innerHTML = `<p>${message}</p>`;
     chatBody.appendChild(messageDiv);
     chatBody.scrollTop = chatBody.scrollHeight;  // Hacer scroll al último mensaje
+    
   }
 
  // Función para generar respuestas automáticas del bot
@@ -171,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	 let respuesta = respuestas[clave];        // 📦 busca el contenido real
 		/*console.log(respuesta);*/
 	if (clave === "titulares") {
-		PingRender();
+		
 		esperandoEmail = true;
 	}
 		
@@ -312,6 +314,7 @@ const PingRender = async () => {
     console.error('❌ Error al hacer el ping:', error.message);
   }
 };
+
 
 });
 

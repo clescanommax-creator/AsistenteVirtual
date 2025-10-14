@@ -1,14 +1,25 @@
 /* Icono de chat (visible al principio) */
+
+.chat-window,
+.chat-header,
+.chat-body,
+.chat-message,
+.chat-input,
+.chat-input input,
+.chat-input button {
+  font-family: Arial, sans-serif;
+}
+
 .chat-icon {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background-color: #white;/*transparent;*/
+  background-color: white;/*transparent;*/
   border: 4px solid #0080FF; /* Cambiá el color y grosor aquí */
   border-radius: 50%;  /* Mantiene forma circular */
   padding: 0px; /*asi el icono ocupa todo el contenedor*/ 
-  width: 150px;        /* Aumenta el ancho */
-  height: 150px;       /* Aumenta el alto */
+  width: 100px;        /* Aumenta el ancho */
+  height: 100px;       /* Aumenta el alto */
 
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);/*none; */
@@ -19,9 +30,9 @@
 }
 
 .chat-icon img {
-  width: 100px;
-  height: 100px;
-  object-fit: contain; la imagen se ajuste al contenedor completo sin recortarse
+  width: 80px;
+  height: 80px;
+  object-fit: contain; /*la imagen se ajuste al contenedor completo sin recortarse*/
   /*object-fit: cover;/*La imagen llena el contenedor sin deformarse pero con cortes */
   box-shadow: none;
   transition: border-color 0.3s ease;
@@ -36,8 +47,8 @@
 /* Ventana de chat (oculta al principio) */
 .chat-window {
   background-color: #ffffff;
-  width: 350px;
-  height: 500px;
+  width: 300px;
+  height: 450px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   display: none; /* Asegúrate de que esté oculta al inicio */
@@ -62,7 +73,9 @@
   flex: 1;
   padding: 15px;
   overflow-y: auto;/* Permite el desplazamiento vertical si el contenido excede el tamaño */
-
+  display: flex;
+  flex-direction: column;
+  
 }
 /* Estilo para los enlaces */
 .chat-link {
@@ -78,9 +91,10 @@
 .chat-message {
   margin-bottom: 15px;
   max-width: 80%;
-  padding: 10px;
+  padding: 8px;
+  font-size: 12px;
   border-radius: 10px;
-  display: inline-block;
+  /*display: inline-block;*/
   word-wrap: break-word;    /* Rompe las palabras largas para que no se desborden */
 
 }
@@ -101,24 +115,20 @@
   border-top: 1px solid #ddd;
   background-color: #f9f9f9;
   align-items: center; /* Centra el contenido verticalmente */
-  /*justify-content: space-between; /* Alinea el input y el botón correctamente */
-  /*width: 100%; /* Asegura que el contenedor tenga el 100% de ancho */
+
 
 }
 /* Campo de texto */
 .chat-input input {
-  /*width: 80%;*/
+  
   flex-grow: 1; /* Hace que el input ocupe todo el espacio disponible */
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-right: 10px; /* Espacio entre el input y el botón */
-  font-size: 14px;
+  font-size: 12px;
   width: auto; /* Asegura que el campo de texto no tenga un ancho fijo */
-  /*
-  display: inline-flex; /* Cambia a inline-flex para que el contenedor ajuste su tamaño al contenido */
-  /*align-items: center; /* Centra el contenido verticalmente */
-  /*justify-content: flex-start; /* Alinea los elementos al inicio, ajustando al botón */
+  
   
 }
 
@@ -128,18 +138,16 @@
   color: white;
   border: none;
   /*padding: 10px;*/
-  padding: 10px 15px; /* Asegura que el botón tenga un espacio más amplio */
+  padding: 5px 10px; /* Asegura que el botón tenga un espacio más amplio */
   min-width: 60px; /* Establece un ancho mínimo para el botón */
-  height: 40px; /* Ajusta la altura del botón para que no se distorsione */
+  height: 35px; /* Ajusta la altura del botón para que no se distorsione */
   border-radius: 5px;
   cursor: pointer;
   object-fit: cover;
   display: inline-flex; /* Asegura que el contenido se centre */
   align-items: center; /* Centra el texto verticalmente */
   justify-content: center; /* Centra el texto horizontalmente */
-/*  white-space: nowrap; /* Evita que el texto se envuelva si es largo */
-  /*flex-shrink: 0; /* Evita que el botón se encoja si el texto es largo */
-  font-size: 14px; /* Tamaño de fuente para que el texto "Enviar" sea adecuado */
+  font-size: 12px; /* Tamaño de fuente para que el texto "Enviar" sea adecuado */
 }
 
 #close-btn {
