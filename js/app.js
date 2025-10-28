@@ -184,7 +184,8 @@ document.addEventListener('DOMContentLoaded', function () {
  
  //Funcion para cargar el menu desde google
   function cargarRespuestasDesdeGoogle() {
-	fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0VfY9dKnLiKbHAtafLiPRGTSon6hewj0CejoKmcsuOE5zepSo9h_6onap12Gk3U5XxoCLxMUf89Ar/pub?output=csv')    
+	/*fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0VfY9dKnLiKbHAtafLiPRGTSon6hewj0CejoKmcsuOE5zepSo9h_6onap12Gk3U5XxoCLxMUf89Ar/pub?output=csv')*/    
+	fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSybMB0_XPBpiorwBDnYly5miQDoW095q9rvv6qESggKbs0vsyretBbEW1eosk6qIdkxfQhhKC6IPDh/pub?gid=0&single=true&output=csv')
     .then(response => response.text())
     .then(data => {
       const filas = data.split('\n');
@@ -268,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 function enviarEmailAGoogleSheets(email) {
-  fetch ('https://asistentevirtual-s3d5.onrender.com/enviar-email', { /*'https://mi-backend-ciudadano-clescanommax.replit.app/enviar-email', {/*('http://localhost:3000/enviar-email', {*/
+    fetch ('https://asistentevirtual-s3d5.onrender.com/enviar-email', { /*'https://mi-backend-ciudadano-clescanommax.replit.app/enviar-email', {/*('http://localhost:3000/enviar-email', {*/
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email })
@@ -280,15 +281,15 @@ function enviarEmailAGoogleSheets(email) {
 	//console.log("Tipo de result:", typeof data.result);
 	
     if (data.status === 'OK') {
-      agregarMensaje("📬 ¡Gracias! Te agregamos a la lista para recibir los titulares diarios.", 'bot');//Email guardado correctamente. ¡Gracias!
+      agregarMensaje("¡Gracias! Te agregamos a la lista para recibir los titulares diarios.", 'bot');//Email guardado correctamente. ¡Gracias!
     } else {
-      agregarMensaje("⚠️ Hubo un problema al guardar tu email. Intenta nuevamente.", 'bot');
+      agregarMensaje("Hubo un problema al guardar tu email. Intenta nuevamente.", 'bot');
     }
   })
   .catch(error => {
     console.error("Error al enviar al backend:", error);
-    agregarMensaje("❌ No se pudo guardar el email. Intentalo más tarde.", 'bot');
-	console.log("Entro aca enviaremail()");
+    agregarMensaje("No se pudo guardar el email. Intentalo más tarde.", 'bot');
+	//console.log("Entro aca enviaremail()");
   });
 }
 
