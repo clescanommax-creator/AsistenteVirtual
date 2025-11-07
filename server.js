@@ -72,5 +72,5 @@ app.get('/ping', (req, res) => {
 });
 
   app.listen(port, () => {
-  console.log(`✅ Backend corriendo en http://localhost:${port}`);
+  console.log(`Backend corriendo en http://localhost:${port}`);
 });
