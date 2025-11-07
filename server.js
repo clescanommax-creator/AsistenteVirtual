@@ -56,11 +56,11 @@ app.post('/enviarNoticia', async (req, res) => {
     const data = await response.json(); // ← lee JSON
 
     console.log("Respuesta de GAS:", data);
-    res.json(data); // Devuelve al navegador
+    res.json({ status: 'OK', message: 'Noticia enviada correctamente', data: data });//res.json(data); // Devuelve al navegador
 
   } catch (err) {
     console.error('Error al conectar con GAS:', err);
-    res.status(500).json({ error: 'Error al cargar la noticia en el servidor' });
+    //res.status(500).json({ error: 'Error al cargar la noticia en el servidor' });
   }
 
 
