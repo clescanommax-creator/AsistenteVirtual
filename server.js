@@ -18,12 +18,12 @@ app.post('/enviar-email', async (req, res) => {
   }
 
   try {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxayiyYN357zx6wTV5HGxwEfO3-BhYT1rZ4Fk2PdJETqmbhXpLdb81cDsqVGPuMTVBl/exec'; //cuenta prueba
-	  //const GAS_URL = 'https://script.google.com/macros/s/AKfycbx5mDSNJTLjh3yLt6ApzCK9nlEqrk8B4GBlwl85dINKMIskgfPIhnHT7ZTKZfVG18vP/exec';//cuenta diario
-	  const response = await fetch(GAS_URL, {
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxayiyYN357zx6wTV5HGxwEfO3-BhYT1rZ4Fk2PdJETqmbhXpLdb81cDsqVGPuMTVBl/exec'; //cuenta de prueba
+    //const GAS_URL = 'https://script.google.com/macros/s/AKfycbx5mDSNJTLjh3yLt6ApzCK9nlEqrk8B4GBlwl85dINKMIskgfPIhnHT7ZTKZfVG18vP/exec'; //cuenta de diario
+    const response = await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
+      body: JSON.stringify({ type: "suscripcion", email })//body: JSON.stringify({ email })
     });
 
     const data = await response.json(); // ← lee JSON
@@ -36,7 +36,6 @@ app.post('/enviar-email', async (req, res) => {
     res.status(500).json({ error: 'Error al enviar el email al servidor' });
   }
 });
-
 
 app.post('/enviarNoticia', async (req, res) => {
   const { noticia: contenido } = req.body;
@@ -68,9 +67,9 @@ app.post('/enviarNoticia', async (req, res) => {
 });
 
 app.get('/ping', (req, res) => {
-  res.status(200).send('pong');
+  res.status(200).send('Activo');
 });
 
-  app.listen(port, () => {
+app.listen(port, () => {
   console.log(`Backend corriendo en http://localhost:${port}`);
 });
