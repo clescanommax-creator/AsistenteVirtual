@@ -18,7 +18,7 @@ app.post('/enviar-email', async (req, res) => {
   }
 
   try {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxayiyYN357zx6wTV5HGxwEfO3-BhYT1rZ4Fk2PdJETqmbhXpLdb81cDsqVGPuMTVBl/exec'; //cuenta de prueba
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec'; //cuenta de prueba
     //const GAS_URL = 'https://script.google.com/macros/s/AKfycbx5mDSNJTLjh3yLt6ApzCK9nlEqrk8B4GBlwl85dINKMIskgfPIhnHT7ZTKZfVG18vP/exec'; //cuenta de diario
     const response = await fetch(GAS_URL, {
       method: 'POST',
@@ -45,7 +45,7 @@ app.post('/enviarNoticia', async (req, res) => {
   }
 
   try {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxayiyYN357zx6wTV5HGxwEfO3-BhYT1rZ4Fk2PdJETqmbhXpLdb81cDsqVGPuMTVBl/exec'; //cuenta de prueba
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec'; //cuenta de prueba                     
     //const GAS_URL = 'https://script.google.com/macros/s/AKfycbx5mDSNJTLjh3yLt6ApzCK9nlEqrk8B4GBlwl85dINKMIskgfPIhnHT7ZTKZfVG18vP/exec'; // cuenta de diario
     const response = await fetch(GAS_URL, {
       method: 'POST',
