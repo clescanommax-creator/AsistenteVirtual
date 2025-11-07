@@ -15,7 +15,7 @@
   bottom: 30px;
   right: 30px;
   background-color: white;/*transparent;*/
-  border: 4px solid #0080FF; /* Cambiá el color y grosor aquí */
+  border: 4px solid #0080FF; /* Cambiá el color y grosor */
   border-radius: 50%;  /* Mantiene forma circular */
   padding: 0px; /*asi el icono ocupa todo el contenedor*/ 
   width: 100px;        /* Aumenta el ancho */
