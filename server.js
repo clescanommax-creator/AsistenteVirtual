@@ -11,7 +11,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors');
 const multer = require('multer');
-const gas_url="https://script.google.com/macros/s/AKfycbw_5Zs_WfEl-X8QTJuThmwkAQuca3CHGKbYxbeJdQBDhFHUwCr5ybfaqqKdE6D0BrCb/exec";
+const GAS_URL="https://script.google.com/macros/s/AKfycbw_5Zs_WfEl-X8QTJuThmwkAQuca3CHGKbYxbeJdQBDhFHUwCr5ybfaqqKdE6D0BrCb/exec";
 
 const upload = multer();
 const app = express();
