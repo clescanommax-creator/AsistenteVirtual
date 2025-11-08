@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors');
 import multer from "multer";
@@ -6,7 +6,15 @@ import fetch from "node-fetch";
 
 const upload = multer();
 const app = express();
-const port = 3000;
+const port = 3000;*/
+const express = require('express');
+const fetch = require('node-fetch');
+const cors = require('cors');
+const multer = require('multer');
+
+const upload = multer();
+const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(cors({
   origin: '*'
