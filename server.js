@@ -11,6 +11,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors');
 const multer = require('multer');
+const gas_url="https://script.google.com/macros/s/AKfycbw_5Zs_WfEl-X8QTJuThmwkAQuca3CHGKbYxbeJdQBDhFHUwCr5ybfaqqKdE6D0BrCb/exec";
 
 const upload = multer();
 const app = express();
@@ -29,7 +30,7 @@ app.post('/enviar-email', async (req, res) => {
   }
 
   try {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec'; //cuenta de prueba
+    //const GAS_URL = 'https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec'; //cuenta de prueba
     //const GAS_URL = 'https://script.google.com/macros/s/AKfycbx5mDSNJTLjh3yLt6ApzCK9nlEqrk8B4GBlwl85dINKMIskgfPIhnHT7ZTKZfVG18vP/exec'; //cuenta de diario
     const response = await fetch(GAS_URL, {
       method: 'POST',
@@ -56,7 +57,7 @@ app.post('/enviarNoticia', async (req, res) => {
   }
 
   try {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec'; //cuenta de prueba                     
+    //const GAS_URL = 'https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec'; //cuenta de prueba                     
     //const GAS_URL = 'https://script.google.com/macros/s/AKfycbx5mDSNJTLjh3yLt6ApzCK9nlEqrk8B4GBlwl85dINKMIskgfPIhnHT7ZTKZfVG18vP/exec'; // cuenta de diario
     const response = await fetch(GAS_URL, {
       method: 'POST',
@@ -86,7 +87,7 @@ app.post("/enviarPDF", upload.single("archivo"), async (req, res) => {
 
     const base64PDF = req.file.buffer.toString("base64");
 
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec";
+    //const GAS_URL = "https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec";
 
     const response = await fetch(GAS_URL, {
       method: "POST",
