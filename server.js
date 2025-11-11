@@ -12,13 +12,11 @@ const fetch = require('node-fetch');
 const cors = require('cors');
 const multer = require('multer');
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxlPx6cgc5F_3bk7Fbz5h4qfIr48pFYA7O-zS_oN6jHxS5orjRqw3C_FZdUIO7qx6o/exec";
-                 
-                 
-//https://script.google.com/macros/s/AKfycbwXLMSSMd9PraXyGPWsS78wwXNEBdcJXG7LrvN1Gbp4UiIXbZ6kzzepdYfWa5xfp2RO/exec"//"https://script.google.com/macros/s/AKfycbw_5Zs_WfEl-X8QTJuThmwkAQuca3CHGKbYxbeJdQBDhFHUwCr5ybfaqqKdE6D0BrCb/exec";
+
 
 const upload = multer();
 const app = express();
-const port = 3000;//process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors({
   origin: '*'
