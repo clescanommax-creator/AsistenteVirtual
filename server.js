@@ -11,11 +11,14 @@ const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors');
 const multer = require('multer');
-const GAS_URL="https://script.google.com/macros/s/AKfycbw_5Zs_WfEl-X8QTJuThmwkAQuca3CHGKbYxbeJdQBDhFHUwCr5ybfaqqKdE6D0BrCb/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxlPx6cgc5F_3bk7Fbz5h4qfIr48pFYA7O-zS_oN6jHxS5orjRqw3C_FZdUIO7qx6o/exec";
+                 
+                 
+//https://script.google.com/macros/s/AKfycbwXLMSSMd9PraXyGPWsS78wwXNEBdcJXG7LrvN1Gbp4UiIXbZ6kzzepdYfWa5xfp2RO/exec"//"https://script.google.com/macros/s/AKfycbw_5Zs_WfEl-X8QTJuThmwkAQuca3CHGKbYxbeJdQBDhFHUwCr5ybfaqqKdE6D0BrCb/exec";
 
 const upload = multer();
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;//process.env.PORT || 3000;
 
 app.use(cors({
   origin: '*'
@@ -38,7 +41,7 @@ app.post('/enviar-email', async (req, res) => {
       body: JSON.stringify({ type: "suscripcion", email })//body: JSON.stringify({ email })
     });
 
-    const data = await response.json(); // ← lee JSON
+    const data = await response.json(); //  lee JSON
 
     console.log("Respuesta de GAS:", data);
     res.json(data); // Devuelve al navegador
@@ -48,6 +51,39 @@ app.post('/enviar-email', async (req, res) => {
     res.status(500).json({ error: 'Error al enviar el email al servidor' });
   }
 });
+
+app.post('/enviar-contacto', async (req, res) => {
+  const { nombre, telefono } = req.body;
+
+  if (!nombre || !telefono) {
+    return res.status(400).json({ status: 'ERROR', message: 'Nombre y teléfono requeridos' });
+  }
+
+  try {
+
+    
+    console.log("Datos a enviar a GAS:", { type: "contacto", nombre, telefono });
+
+    const response = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: "contacto", nombre, telefono })
+    });
+
+    const data = await response.json();
+    console.log("Respuesta de GAS (contacto):", data);
+
+    if (data.status === 'OK') {
+      res.json({ status: 'OK', message: 'Contacto enviado correctamente', data });
+    } else {
+      res.json({ status: 'ERROR', message: `GAS: ${data.message}`, data });
+    }
+  } catch (err) {
+    console.error('Error al conectar con GAS (contacto):', err);
+    res.status(500).json({ status: 'ERROR', message: 'Error al enviar el contacto al servidor' });
+  }
+});
+
 
 app.post('/enviarNoticia', async (req, res) => {
   const { noticia: contenido } = req.body;
@@ -81,6 +117,49 @@ app.post('/enviarNoticia', async (req, res) => {
 
 app.post("/enviarPDF", upload.single("archivo"), async (req, res) => {
   try {
+    console.log("📥 Llamada recibida a /enviarPDF");
+    console.log("req.file:", req.file);
+    console.log("req.body:", req.body);
+
+    if (!req.file) {
+      return res.status(400).json({ status: "ERROR", message: "No se recibió archivo." });
+    }
+
+    const base64PDF = req.file.buffer.toString("base64");
+
+    console.log("Enviando PDF al GAS...");
+    console.log("Nombre:", req.file.originalname);
+    console.log("Tamaño del buffer:", req.file.buffer.length);
+
+
+    const response = await fetch(GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "pdf", archivo: base64PDF, nombre: req.file.originalname })
+    });
+
+    const text = await response.text(); // ← lee texto en lugar de json()
+    console.log("Respuesta cruda de GAS:", text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      console.error("Respuesta no es JSON válida:", e);
+      return res.status(500).json({ status: "ERROR", message: "Respuesta no válida del GAS" });
+    }
+
+    res.json(data);
+  } catch (err) {
+    console.error("Error al enviar PDF:", err);
+    res.status(500).json({ status: "ERROR", message: "Fallo al enviar PDF al GAS." });
+  }
+});
+
+
+/*
+app.post("/enviarPDF", upload.single("archivo"), async (req, res) => {
+  try {
     if (!req.file) {
       return res.status(400).json({ status: "ERROR", message: "No se recibió archivo." });
     }
@@ -107,7 +186,7 @@ app.post("/enviarPDF", upload.single("archivo"), async (req, res) => {
     console.error("Error al enviar PDF:", err);
     res.status(500).json({ status: "ERROR", message: "Fallo al enviar PDF al GAS." });
   }
-});
+});*/
 
 app.get('/ping', (req, res) => {
   res.status(200).send('Activo');
