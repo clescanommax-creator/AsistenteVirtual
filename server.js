@@ -3,7 +3,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors');
 const multer = require('multer');
-const GAS_URL = "https://script.google.com/macros/s/AKfycbx5mDSNJTLjh3yLt6ApzCK9nlEqrk8B4GBlwl85dINKMIskgfPIhnHT7ZTKZfVG18vP/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzPO9lzJ2kF_FcLO9LfdHH1pNVOnqnqvU5nWxgB6X4V0MvljW9OaOtgrhAWcVOjZrF7/exec";
 
 
 
@@ -24,8 +24,7 @@ app.post('/enviar-email', async (req, res) => {
   }
 
   try {
-    //const GAS_URL = 'https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec'; //cuenta de prueba
-    //const GAS_URL = 'https://script.google.com/macros/s/AKfycbx5mDSNJTLjh3yLt6ApzCK9nlEqrk8B4GBlwl85dINKMIskgfPIhnHT7ZTKZfVG18vP/exec'; //cuenta de diario
+
     const response = await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -84,8 +83,7 @@ app.post('/enviarNoticia', async (req, res) => {
   }
 
   try {
-    //const GAS_URL = 'https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec'; //cuenta de prueba                     
-    //const GAS_URL = 'https://script.google.com/macros/s/AKfycbx5mDSNJTLjh3yLt6ApzCK9nlEqrk8B4GBlwl85dINKMIskgfPIhnHT7ZTKZfVG18vP/exec'; // cuenta de diario
+
     const response = await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -99,7 +97,7 @@ app.post('/enviarNoticia', async (req, res) => {
 
   } catch (err) {
     console.error('Error al conectar con GAS:', err);
-    //res.status(500).json({ error: 'Error al cargar la noticia en el servidor' });
+
   }
 
 
@@ -108,20 +106,12 @@ app.post('/enviarNoticia', async (req, res) => {
 
 app.post("/enviarPDF", upload.single("archivo"), async (req, res) => {
   try {
-    console.log("📥 Llamada recibida a /enviarPDF");
-    console.log("req.file:", req.file);
-    console.log("req.body:", req.body);
 
     if (!req.file) {
       return res.status(400).json({ status: "ERROR", message: "No se recibió archivo." });
     }
 
     const base64PDF = req.file.buffer.toString("base64");
-
-    console.log("Enviando PDF al GAS...");
-    console.log("Nombre:", req.file.originalname);
-    console.log("Tamaño del buffer:", req.file.buffer.length);
-
 
     const response = await fetch(GAS_URL, {
       method: "POST",
