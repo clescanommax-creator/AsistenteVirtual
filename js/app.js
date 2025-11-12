@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Obtener los elementos del DOM
 
+  const API_URL = "https://asistentevirtual-s3d5.onrender.com"; //server en el render //http://localhost:3000
   const chatIcon = document.getElementById('chat-icon');
   const chatWindow = document.getElementById('chat-window');
   const closeButton = document.getElementById('close-btn');
@@ -20,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let estado = "normal";
   HabilitarAdj(false);
   cargarRespuestasDesdeGoogle();//cargamos el menu desde nuestro archivo.
-  console.log(respuestas["menu"]);
   cerrarChat();// Inicialmente, el chat está oculto y el icono visible.
   let datosContacto = { nombre: null, telefono: null };
 
@@ -28,12 +28,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Mostramos la ventana de chat y ocultamos el icono.
   chatIcon.addEventListener('click', async () => {
-    console.log("entrandoal ping");
     PingRender();
 
     if (chatIniciado == false) {
       await cargarRespuestasDesdeGoogle();
-      console.log(respuestas["menu"]);
 
       let mensajeInicial = generarSaludo();
       agregarMensaje(mensajeInicial, 'bot');
@@ -92,9 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   });
 
-
-  /**/
-
   //######################Envio de informacion al sheet##############################
 
   const estados = {
@@ -109,8 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
     },
 
     esperandoNoticia: (msj) => {
-      console.log("Entro al objeto estados, noticia: " + msj);
-      //normalizarTexto(msj);
       procesarNoticia(msj);
       estado = "normal";
     },
@@ -171,7 +164,8 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   function enviarEmailAGoogleSheets(email) {
-    fetch('https://asistentevirtual-s3d5.onrender.com/enviar-email', {//fetch('http://localhost:3000/enviar-email', {// /*'https://mi-backend-ciudadano-clescanommax.replit.app/enviar-email', {/*('http://localhost:3000/enviar-email', {*/
+    agregarMensaje("Estamos cargando tu email...", "bot");
+    fetch(`${API_URL}/enviar-email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
@@ -181,7 +175,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         if (data.status === 'OK') {
-          agregarMensaje("¡Gracias! Te agregamos a la lista para recibir los titulares diarios.", 'bot');//Email guardado correctamente. ¡Gracias!
+          agregarMensaje("¡Gracias! Te agregamos a la lista para recibir los titulares diarios.", 'bot');
+          agregarMensaje(respuestas['menu2'], 'bot');
         } else {
           agregarMensaje("Hubo un problema al guardar tu email. Intenta nuevamente.", 'bot');
         }
@@ -189,12 +184,12 @@ document.addEventListener('DOMContentLoaded', function () {
       .catch(error => {
         console.error("Error al enviar al backend:", error);
         agregarMensaje("No se pudo guardar el email. Intentalo más tarde.", 'bot');
-        //console.log("Entro aca enviaremail()");
       });
   }
 
   function enviarContactoAGoogleSheets(nombre, telefono) {
-    fetch('https://asistentevirtual-s3d5.onrender.com/enviar-contacto', { // o tu endpoint en Render
+    agregarMensaje("Estamos cargando sus datos...", "bot");
+    fetch(`${API_URL}/enviar-contacto`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nombre, telefono })
@@ -202,10 +197,9 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(response => response.json())
       .then(data => {
 
-        console.log("Respuesta del backend:", data);
-
         if (data.status === 'OK') {
           agregarMensaje("¡Perfecto! Te registramos correctamente.", 'bot');
+          agregarMensaje(respuestas['menu2'], 'bot');
         } else {
           agregarMensaje("Hubo un problema al guardar tus datos. Intentalo nuevamente.", 'bot');
         }
@@ -221,19 +215,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // Mostramos un mensaje de espera opcional
     agregarMensaje("Procesando tu noticia...", 'bot');
 
-    fetch('https://asistentevirtual-s3d5.onrender.com/enviarNoticia', {//fetch('https://asistentevirtual-s3d5.onrender.com/enviarNoticia', {
+    fetch(`${API_URL}/enviarNoticia`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ noticia: noticia })  // enviamos la noticia tal cual body: JSON.stringify({ type: "noticia", contenido: noticia }) //
     })
       .then(response => response.json())
       .then(data => {
-        console.log("Entró a procesarNoticia");
-        console.log("Respuesta del backend:", data);
-        console.log("Tipo de respuesta:", typeof data);
-
         if (data.status === 'OK') {
           agregarMensaje("¡Gracias por tu colaboración!", 'bot'); // todo OK
+          agregarMensaje(respuestas['menu2'], 'bot');
         } else if (data.status === 'ERROR' && data.message) {
           agregarMensaje(`Hubo un problema: ${data.message}`, 'bot'); // error con mensaje del backend
         } else {
@@ -249,8 +240,9 @@ document.addEventListener('DOMContentLoaded', function () {
   function enviarPDF(archivo) {
     const formData = new FormData();
     formData.append("archivo", archivo);
+    agregarMensaje("Estamos cargando tu CV...", "bot");
 
-    fetch("https://asistentevirtual-s3d5.onrender.com/enviarPDF", {
+    fetch(`${API_URL}/enviarPDF`, {
       method: "POST",
       body: formData
     })
@@ -262,10 +254,9 @@ document.addEventListener('DOMContentLoaded', function () {
           message: "Respuesta no válida del servidor"
         }));
 
-        console.log("Respuesta del backend:", data);
-
         if (data.status === "OK") {
           agregarMensaje("PDF guardado correctamente.", "bot");
+          agregarMensaje(respuestas['menu2'], 'bot');
         } else {
           // ⚡ CAMBIO: Mostramos mensaje real del backend
           agregarMensaje(`Hubo un problema al subir el PDF: ${data.message}`, "bot");
@@ -279,8 +270,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function reiniciarConversacion() {
-    console.log("Reiniciando conversación...");
-
     // Limpiamos el historial del chat
     chatBody.innerHTML = '';
 
@@ -303,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     reiniciarInactividad();
   }
-    // Función para generar respuestas automáticas del bot
+  // Función para generar respuestas automáticas del bot
   function getBotRespuesta(texto) {
     const consulta = normalizarTexto(texto);
 
@@ -320,17 +309,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const clave = alias[consulta] || consulta; //  resuelve alias si existe
     let respuesta = respuestas[clave];        //  busca el contenido real
-    console.log(respuesta);
-    console.log("la clave es " + clave);
+
     if (clave === "11") {// Agregar una nota
-      console.log("cambio de estado 11");
       estado = "esperandoNoticia";
     }
     if (clave === "12") {//suscripcion de titulares
       estado = "esperandoEmail";
     }
     if (consulta === "2") {// Opcion adjuntar
-
       HabilitarAdj(true);
       estado = "esperandoPdf";
 
@@ -363,9 +349,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-//######################Funciones auxiliares##############################
+  //######################Funciones auxiliares##############################
 
-  
+
   // Función para mostrar los mensajes en el chat
   function agregarMensaje(message, sender) {
 
@@ -408,8 +394,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //Funcion para cargar el menu desde google
   function cargarRespuestasDesdeGoogle() {
-    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0VfY9dKnLiKbHAtafLiPRGTSon6hewj0CejoKmcsuOE5zepSo9h_6onap12Gk3U5XxoCLxMUf89Ar/pub?gid=0&single=true&output=csv')
-
+    //fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0VfY9dKnLiKbHAtafLiPRGTSon6hewj0CejoKmcsuOE5zepSo9h_6onap12Gk3U5XxoCLxMUf89Ar/pub?gid=0&single=true&output=csv') //cuenta de prueba
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSybMB0_XPBpiorwBDnYly5miQDoW095q9rvv6qESggKbs0vsyretBbEW1eosk6qIdkxfQhhKC6IPDh/pub?output=csv')
+    
       .then(response => response.text())
       .then(data => {
         const filas = data.split('\n');
@@ -437,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
             respuestas[entradaNorm] = contenido; // es respuesta directa
           }
         });
-        /*console.log('Contenido de "registro":', respuestas['registro']);*/
+
       });
 
   }
@@ -489,9 +476,10 @@ document.addEventListener('DOMContentLoaded', function () {
     return re.test(email.trim().toLowerCase());//email.toLowerCase());
   }
   //despierta el render
+
   const PingRender = async () => {
     try {
-      const response = await fetch('https://asistentevirtual-s3d5.onrender.com/ping');
+      const response = await fetch(`${API_URL}/ping`);
       if (response.ok) {
         console.log(' App de Render despertada correctamente');
       } else {

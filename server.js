@@ -1,17 +1,10 @@
-/*const express = require('express');
-const fetch = require('node-fetch');
-const cors = require('cors');
-import multer from "multer";
-import fetch from "node-fetch";
 
-const upload = multer();
-const app = express();
-const port = 3000;*/
 const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors');
 const multer = require('multer');
-const GAS_URL = "https://script.google.com/macros/s/AKfycbxlPx6cgc5F_3bk7Fbz5h4qfIr48pFYA7O-zS_oN6jHxS5orjRqw3C_FZdUIO7qx6o/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbx5mDSNJTLjh3yLt6ApzCK9nlEqrk8B4GBlwl85dINKMIskgfPIhnHT7ZTKZfVG18vP/exec";
+
 
 
 const upload = multer();
@@ -154,37 +147,6 @@ app.post("/enviarPDF", upload.single("archivo"), async (req, res) => {
   }
 });
 
-
-/*
-app.post("/enviarPDF", upload.single("archivo"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ status: "ERROR", message: "No se recibió archivo." });
-    }
-
-    const base64PDF = req.file.buffer.toString("base64");
-
-    //const GAS_URL = "https://script.google.com/macros/s/AKfycbwh6KxsrpipSJRmsIvA2mwDnmAMfdABpB1Hom-NYP-wgal-3bHu5b6fLD4LbFpG3VgO/exec";
-
-    const response = await fetch(GAS_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        type: "pdf",
-        archivo: base64PDF,
-        nombre: req.file.originalname
-      })
-    });
-
-    const data = await response.json();
-    console.log("Respuesta de GAS:", data);
-
-    res.json(data);
-  } catch (err) {
-    console.error("Error al enviar PDF:", err);
-    res.status(500).json({ status: "ERROR", message: "Fallo al enviar PDF al GAS." });
-  }
-});*/
 
 app.get('/ping', (req, res) => {
   res.status(200).send('Activo');
